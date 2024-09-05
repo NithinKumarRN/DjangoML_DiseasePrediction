@@ -1,0 +1,16 @@
+{% block content %}
+  <h2>Predict Disease</h2>
+  <form method="post">
+    {% csrf_token %}
+    <h3>Reported Symptoms:</h3>
+    <ul>
+      {% for symptom in symptoms %}
+        <li>
+          <input type="checkbox" name="symptoms" value="{{ symptom.id }}" id="symptom_{{ symptom.id }}" checked>
+          <label for="symptom_{{ symptom.id }}">{{ symptom.name }}</label>
+        </li>
+      {% endfor %}
+    </ul>
+    <button type="submit">Predict Disease</button>
+  </form>
+{% endblock %}

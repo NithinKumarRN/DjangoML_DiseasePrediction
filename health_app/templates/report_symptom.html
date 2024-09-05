@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Prediction System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        select {
+            width: 200px;
+            padding: 5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        button {
+            padding: 5px 10px;
+            margin-right: 10px;
+        }
+        nav a {
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Health Prediction System</h1>
+    <nav>
+        <a href="#">Home</a> |
+        <a href="#">Report Symptoms</a> |
+        <a href="#">My Symptoms</a> |
+        <a href="#">Logout</a>
+    </nav>
+    <h2>Report Symptoms</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div id="symptom-container">
+            <select name="symptoms[]">
+                <option value="">Select a symptom</option>
+                {% for symptom in symptoms %}
+                    <option value="{{ symptom.id }}">{{ symptom.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="button" id="add-symptom">Add Another Symptom</button>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('add-symptom').addEventListener('click', function() {
+            const container = document.getElementById('symptom-container');
+            const newSelect = document.createElement('select');
+            newSelect.name = 'symptoms[]';
+            newSelect.innerHTML = `
+                <option value="">Select a symptom</option>
+                {% for symptom in symptoms %}
+                    <option value="{{ symptom.id }}">{{ symptom.name }}</option>
+                {% endfor %}
+            `;
+            container.appendChild(newSelect);
+        });
+
+        // Client-side validation
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const selects = document.querySelectorAll('select[name="symptoms[]"]');
+            let valid = false;
+            selects.forEach(select => {
+                if (select.value) valid = true;
+            });
+            if (!valid) {
+                alert('Please select at least one symptom.');
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health Prediction System</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+
+</head>
+<body>
+    <h1>Health Prediction System</h1>
+    <nav>
+        {% if user.is_authenticated %}
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'report_symptoms' %}">Report Symptoms</a>
+            <a href="{% url 'symptom_list' %}">My Symptoms</a>
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+    </nav>
+    
+    {% block content %}
+    {% endblock %}
+    
+    <footer>© 2024 Health Prediction System</footer>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome to the Health Prediction System</h2>
+<p>This system will help predict potential health issues based on your symptoms.</p>
+
+{% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}!</p>
+    <p><a href="{% url 'report_symptoms' %}">Report a new symptom</a></p>
+{% else %}
+    <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a> to get started.</p>
+{% endif %}
+{% endblock %}
