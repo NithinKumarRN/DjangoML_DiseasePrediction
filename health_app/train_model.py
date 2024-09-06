@@ -43,7 +43,7 @@ if __name__ == "__main__":
     # Assuming the last column is the target (disease) and all others are symptoms
     X = data.iloc[:, :-1]  # All columns except the last one
     y = data.iloc[:, -1]   # The last column
-    
+    print(X)
     print("Shape of X:", X.shape)
     print("Shape of y:", y.shape)
     

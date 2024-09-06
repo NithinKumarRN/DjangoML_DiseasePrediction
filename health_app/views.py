@@ -10,7 +10,7 @@ from .forms import CustomUserCreationForm
 from .models import Symptom, UserSymptomReport
 import traceback
 from .util import load_model
-
+import os
 
 import joblib
 from sklearn.svm import SVC
@@ -37,7 +37,8 @@ def load_model():
         print(f"Error loading model: {e}")
         print("Ensure that 'trained_model.pkl' exists and contains 'model', 'scaler', and 'label_encoder'")
 def create_symptom_vector(selected_symptom_ids):
-    all_symptoms = [col for col in pd.read_csv(r'C:\Users\user\Desktop\health_prediction_system\health_app\Training.csv').columns if col != 'prognosis']
+    file_location = os.getcwd() + "\health_app\Training.csv"
+    all_symptoms = [col for col in pd.read_csv(file_location).columns if col != 'prognosis']
     symptom_vector = [0] * 132  # Ensure exactly 132 elements
     
     for symptom_id in selected_symptom_ids:

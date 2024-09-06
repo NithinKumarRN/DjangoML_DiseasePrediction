@@ -1,14 +1,15 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
-from .models import Symptom, UserSymptomReport
+from .models import Symptom, UserSymptomReport, CustomUser
 
 User = get_user_model()
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
-        model = User
-        fields = UserCreationForm.Meta.fields + ('email',)
+        model = CustomUser
+        # fields = UserCreationForm.Meta.fields + ('email',)
+        fields = ('username','email','password1','password2')
 
 class SymptomReportForm(forms.Form):
     symptoms = forms.ModelMultipleChoiceField(
@@ -29,14 +30,14 @@ class SymptomSelectionForm(forms.Form):
         queryset=Symptom.objects.all(),
         widget=forms.CheckboxSelectMultiple
     )
-from django import forms
+# from django import forms
 
-class CustomUserCreationForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+# class CustomUserCreationForm(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+        # super().__init__(*args, **kwargs)
         
-        try:
-            from django.contrib.auth.models import User
-        except ImportError:
-            from django.contrib.auth.models import User as User
-        self.fields['username'].queryset = User.objects.all()
+        # try:
+            # from django.contrib.auth.models import User
+        # except ImportError:
+            # from django.contrib.auth.models import User as User
+        # self.fields['username'].queryset = User.objects.all()
